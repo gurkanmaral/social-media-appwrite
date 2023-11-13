@@ -41,7 +41,7 @@ const navigate = useNavigate()
        
       const updatedUser = await updateUser({
         ...values,
-        userId:user.$id,
+        userId:user?.$id || "",
         imageId:user?.imageId,
         imageUrl:user?.imageUrl,
         bgImageId:user?.bgImageId,

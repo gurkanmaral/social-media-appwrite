@@ -61,11 +61,11 @@ export const checkIsLiked = (likeList: string[], userId: string) => {
 export const getMonthAndYear = (inputDate:string) =>{
 
   if (!inputDate) {
-    return ""; // Handle the case where inputDate is undefined
+    return ""; 
   }
 
   const date = new Date(inputDate);
-  const options = { year: "numeric", month: "long" };
+  const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long" };
   const formattedDate = new Intl.DateTimeFormat("en-US", options).format(date);
 
   return formattedDate
