@@ -4,7 +4,7 @@ import {
     useQueryClient,
     useInfiniteQuery,
 } from '@tanstack/react-query'
-import { LikeComment, LikePost, addComment, addMessage, addRelations, createPost, createUserAccount, deletePost, deleteRelation, deleteSavedPost, getComments, getCurrentUser, getInfinitUsersPost, getInfinitePost, getInfiniteSavedPosts, getInfiniteUsers, getInfiniteUsersPost, getNewRelations, getPostById, getRecentPosts, getRightbarUsers, getUserById, getUserChats, getUsersSavedPost, savePost, searchPosts, searchUsers, signInAccount, signOutAccount, updatePost, updateUser } from '../appwrite/api'
+import { LikeComment, LikePost, addComment, addMessage, addRelations, createPost, createUserAccount, deletePost, deleteRelation, deleteSavedPost, getComments, getCurrentUser, getInfinitePost, getInfiniteSavedPosts, getInfiniteUsers, getInfiniteUsersPost, getNewRelations, getPostById, getRecentPosts, getRightbarUsers, getUserById, getUserChats, getUsersSavedPost, savePost, searchPosts, searchUsers, signInAccount, signOutAccount, updatePost, updateUser } from '../appwrite/api'
 import { INewPost, INewUser, IUpdatePost, IUpdateUser } from '@/types'
 
 import { QUERY_KEYS } from './queryKeys'
@@ -283,7 +283,7 @@ export const useDeletePost = () =>{
 export const useGetPosts = () =>{
     return useInfiniteQuery({
         queryKey:[QUERY_KEYS.GET_INFINITE_POSTS],
-        queryFn: getInfinitePost as any,
+        queryFn: getInfinitePost ,
         getNextPageParam:(lastPage:any )=>{
             if(lastPage && lastPage.documents.length === 0) {
                 return null;
@@ -292,7 +292,8 @@ export const useGetPosts = () =>{
             const lastId = lastPage?.documents[lastPage?.documents.length -1].$id;
 
             return lastId;
-        }
+        },
+        initialPageParam: null
     })
 }
 export const useGetUserChats = (receiverId:string,senderId:string)=>{
@@ -302,18 +303,20 @@ export const useGetUserChats = (receiverId:string,senderId:string)=>{
         queryFn:()=> getUserChats(receiverId,senderId),
     })
 }
+
 export const useGetSavedPost = (id:string) =>{
     
     return useInfiniteQuery({
         queryKey:[QUERY_KEYS.GET_INFINITE_SAVED_POSTS,id],
-        queryFn:({pageParam}: {pageParam:number})=> getInfiniteSavedPosts(pageParam,id) as any,
+        queryFn:({pageParam}: {pageParam:number})=> getInfiniteSavedPosts(pageParam,id),
         getNextPageParam:(lastPage:any)=>{
             if(lastPage && lastPage.documents.length === 0) return null;
 
             const lastId = lastPage?.documents[lastPage?.documents.length -1].$id;
 
             return lastId;
-        }
+        },
+        initialPageParam: null
     })
 }
 export const useGetUsersSavedPost = (id:string)=>{
@@ -327,14 +330,15 @@ export const useGetUserPosts = (id:string) =>{
     
     return useInfiniteQuery({
         queryKey:[QUERY_KEYS.GET_INFINITE_USER_POSTS,id],
-        queryFn: ({pageParam}:{pageParam:number})=> getInfiniteUsersPost(pageParam,id) as any,
+        queryFn: ({pageParam}:{pageParam:number})=> getInfiniteUsersPost(pageParam,id) ,
         getNextPageParam:(lastPage:any)=>{
             if(lastPage && lastPage.documents.length === 0) return null;
 
             const lastId = lastPage?.documents[lastPage?.documents.length -1].$id;
 
             return lastId;
-        }
+        },
+        initialPageParam: null
     })
 
 }
@@ -349,13 +353,14 @@ export const useRightBarUsers = () =>{
 export const useGetUsers = () =>{
     return useInfiniteQuery({
         queryKey:[QUERY_KEYS.GET_USERS],
-        queryFn: getInfiniteUsers as any,
+        queryFn: getInfiniteUsers ,
         getNextPageParam:(lastPage:any)=>{
             if(lastPage && lastPage.documents.length === 0) return null;
             const lastId = lastPage?.documents[lastPage?.documents.length -1].$id;
 
             return lastId;
-        }
+        },
+        initialPageParam: null
     })
 }
 

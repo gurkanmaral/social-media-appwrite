@@ -1,6 +1,5 @@
 import { useGetCurrentUser } from '@/lib/react-query/queriesAndMutations'
 import { multiFormatDateString } from '@/lib/utils'
-import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 

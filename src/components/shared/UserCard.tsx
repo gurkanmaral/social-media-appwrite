@@ -1,7 +1,7 @@
 import { useAddRelation, useDeleteRelation, useGetCurrentUser } from '@/lib/react-query/queriesAndMutations'
 import { Models } from 'appwrite'
 import { Loader } from 'lucide-react'
-import React, { useState,useEffect } from 'react'
+import  { useState,useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 type UserCardProps = {

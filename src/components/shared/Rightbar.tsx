@@ -1,8 +1,7 @@
 import { useGetCurrentUser, useRightBarUsers } from '@/lib/react-query/queriesAndMutations'
-import React from 'react'
+
 import RightBarUserCard from './RightBarUserCard'
 import Loader from './Loader'
-import { Models } from 'appwrite'
 
 
 

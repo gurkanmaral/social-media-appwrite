@@ -10,18 +10,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import { Textarea } from "../ui/textarea"
 import FileUploader from "../shared/FileUploader"
 import { toast } from "../ui/use-toast"
 import { useNavigate } from "react-router-dom"
 import { UserValidation } from "@/lib/validation"
-import { IUpdateUser } from "@/types"
 import { Models } from "appwrite"
 import { useUpdateUser } from "@/lib/react-query/queriesAndMutations"
 
 type UpdateUserProps = {
-  user: Models.Document
+  user?: Models.Document
 }
 
 const UpdateUser = ({user}:UpdateUserProps) => {
@@ -52,7 +50,7 @@ const navigate = useNavigate()
       if(!updatedUser) {
         toast({title:'Please try again'})
       }
-      return navigate(`/profile/${user.$id}`)
+      return navigate(`/profile/${user?.$id}`)
        }
 
   return (

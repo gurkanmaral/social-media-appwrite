@@ -1,8 +1,8 @@
-import { useUserContext } from '@/context/AuthContext';
+
 import { useDeleteSavePost, useGetCurrentUser, useLikePost, useSavePost } from '@/lib/react-query/queriesAndMutations';
 import { checkIsLiked } from '@/lib/utils';
 import { Models } from 'appwrite'
-import {useState,useEffect,React} from 'react'
+import React, {useState,useEffect} from 'react'
 import Loader from './Loader';
 
 type PostStatsProps = {

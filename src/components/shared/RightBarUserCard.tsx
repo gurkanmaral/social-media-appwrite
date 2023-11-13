@@ -1,5 +1,5 @@
-import React,{useState,useEffect} from 'react'
-import { Button } from '../ui/button'
+import {useState,useEffect} from 'react'
+
 import { useAddRelation, useDeleteRelation } from '@/lib/react-query/queriesAndMutations'
 import { Models } from 'appwrite'
 import Loader from './Loader'

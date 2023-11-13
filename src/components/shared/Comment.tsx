@@ -16,7 +16,7 @@ const Comment = ({item,user,currentUser}:CommentProps) => {
 
     const [likes,setLikes] = useState(likesList)
 
-    const{mutate:likeComment,isPending} = useLikeComment()
+    const{mutate:likeComment} = useLikeComment()
 
     const handeLikePost = (e: React.MouseEvent) =>{
         e.stopPropagation();

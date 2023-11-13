@@ -157,7 +157,7 @@ if(isLoading){
       ):
       userPosts?.pages.map((page, pageIndex) => (
                     <div key={`page-${pageIndex}`} className='flex flex-col gap-4'>
-                      {page?.documents.map((post) => (
+                      {page?.documents.map((post:any) => (
                        <ProfilePostsCard
                        post={post}
                        key={post.$id}

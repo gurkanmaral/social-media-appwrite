@@ -1,7 +1,6 @@
 import UpdateUser from '@/components/forms/UpdateUser'
 import Loader from '@/components/shared/Loader'
 import { useGetUserById } from '@/lib/react-query/queriesAndMutations'
-import React from 'react'
 import { useParams } from 'react-router-dom'
 
 const UpdateProfile = () => {
