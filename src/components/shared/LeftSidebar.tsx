@@ -17,7 +17,7 @@ const navigate = useNavigate()
     if(isSuccess) navigate(0)
 
   }, [isSuccess])
-  console.log(user)
+ 
 
   return (
     <div className='leftsidebar'>

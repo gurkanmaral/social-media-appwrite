@@ -11,7 +11,7 @@ const Rightbar = () => {
   const {data:rightbarUsers,isPending} = useRightBarUsers()
   const {data:currentUser} = useGetCurrentUser()
 
-  console.log(rightbarUsers)
+
 
   const filteredUsers = rightbarUsers?.documents?.filter((item)=> item.$id !== currentUser?.$id)
 

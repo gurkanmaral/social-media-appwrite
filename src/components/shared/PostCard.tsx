@@ -14,7 +14,7 @@ const PostCard = ({post}:PostCardProps) => {
 
     if(!post.creator) return
   
-console.log(post)
+
   return (
     <div className='post-card gap-2 flex flex-col '>
         <div className='flex-between'> 
