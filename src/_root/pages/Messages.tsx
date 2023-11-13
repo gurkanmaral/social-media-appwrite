@@ -57,7 +57,7 @@ const Messages = () => {
             </div>
             <div style={{ flex: '2' }} className={`${selectedPage === "menu" ? 'hidden' : ''} md:flex  flex-col h-full `}>
             <Chatbox
-                      currentUser={currentUser}
+                      currentUser={currentUser?.$id || "" } 
                       selectedUser={selectedUser}
                       setSelectedUser={setSelectedUser}
                       setSelectedPage={setSelectedPage}

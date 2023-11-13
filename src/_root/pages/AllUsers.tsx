@@ -1,24 +1,23 @@
 import UsersList from '@/components/shared/UsersList';
 import { Input } from '@/components/ui/input'
-import { useUserContext } from '@/context/AuthContext';
 import useDebounce from '@/hooks/useDebounce';
-import { useGetCurrentUser, useGetUsers, useSearchUsers } from '@/lib/react-query/queriesAndMutations';
+import {  useGetUsers, useSearchUsers } from '@/lib/react-query/queriesAndMutations';
 import { Models } from 'appwrite';
 import { Loader } from 'lucide-react';
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer';
 
 
 export type SearchResultProps = {
   isSearchFetching: boolean;
-  searchedUser: Models.Document;
+  searchedUser?: Models.Document[];
 };
 const SearchUserResults = ({ isSearchFetching, searchedUser }: SearchResultProps) =>{
 
   if (isSearchFetching) {
     return <Loader />;
-  } else if (searchedUser && searchedUser.documents.length > 0) {
-    return <UsersList users={searchedUser.documents} />;
+  } else if (searchedUser && searchedUser.length > 0) {
+    return <UsersList users={searchedUser} />;
   } else {
     return (
       <p className="text-light-4 mt-10 text-center w-full">No results found</p>
@@ -30,7 +29,6 @@ const AllUsers = () => {
 
   const [searchValue,setSearchValue] = useState('')
 
-  const {user} = useUserContext()
 
  
   const {ref,inView} = useInView();
@@ -85,7 +83,7 @@ const AllUsers = () => {
       {shouldShowSearchResults ? (
             <SearchUserResults
             isSearchFetching = {isSearchFetching}
-            searchedUser={searchedUser}
+            searchedUser={searchedUser?.documents}
             />
           ) : shouldShowPosts ? (
             <p className='text-light-4 mt-10 text-center w-full'>

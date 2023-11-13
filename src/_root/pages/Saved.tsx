@@ -1,17 +1,13 @@
-import HomePostList from '@/components/shared/HomePostList';
 import { useGetCurrentUser, useGetSavedPost } from '@/lib/react-query/queriesAndMutations'
-
-import React from 'react'
 import { useInView } from 'react-intersection-observer';
 import {useEffect} from "react"
-import SavedPostList from '@/components/shared/SavedPostList';
 import PostCard from '@/components/shared/PostCard';
 import Loader from '@/components/shared/Loader';
 
 const Saved = () => {
   const {ref,inView} = useInView();
-  const {data:currentUser,isLoading:userIsLoading} = useGetCurrentUser();
-  const {data:posts,fetchNextPage,hasNextPage,isPending:isLoading} = useGetSavedPost(currentUser?.$id)
+  const {data:currentUser} = useGetCurrentUser();
+  const {data:posts,fetchNextPage,hasNextPage,isPending:isLoading} = useGetSavedPost(currentUser?.$id || "")
   
   useEffect(()=>{
     if(inView ) fetchNextPage();
@@ -34,7 +30,7 @@ const Saved = () => {
                 <ul className='flex flex-col flex-1 gap-9 w-full'>
                    {posts?.pages.map((page, pageIndex) => (
                     <div key={`page-${pageIndex}`} className='flex flex-col gap-4'>
-                      {page?.documents.map((post, postIndex) => (
+                      {page?.documents.map((post:any) => (
                        <PostCard
                        post={post.post}
                        key={post.$id}

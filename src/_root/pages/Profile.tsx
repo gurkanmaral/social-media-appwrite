@@ -1,12 +1,10 @@
-import UpdateUser from '@/components/forms/UpdateUser'
 import Loader from '@/components/shared/Loader'
-import PostCard from '@/components/shared/PostCard'
 import ProfilePostsCard from '@/components/shared/ProfilePostsCard'
 import { Button } from '@/components/ui/button'
 import { useAddRelation, useDeleteRelation, useGetCurrentUser, useGetUserById, useGetUserPosts } from '@/lib/react-query/queriesAndMutations'
 import { getMonthAndYear } from '@/lib/utils'
 import { Models } from 'appwrite'
-import React,{useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import { useInView } from 'react-intersection-observer'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
@@ -15,10 +13,9 @@ const Profile = () => {
   const {id} = useParams()
   const {data:currentUser} = useGetCurrentUser()
   const [isFollowed,setIsFollowed] = useState(false)
-  const {data:user,isLoading} = useGetUserById(id)
-  const {data:userPosts,fetchNextPage,hasNextPage,isPending:isPostsLoading} = useGetUserPosts(id)
+  const {data:user,isLoading} = useGetUserById(id ||"")
+  const {data:userPosts,fetchNextPage,hasNextPage,isPending:isPostsLoading} = useGetUserPosts(id || "")
   const [open,setOpen] = useState(false) 
-  const [selected,setSelected] = useState("Posts")
   const [selectedFollow,setSelectedFollow] = useState("")
   const [hoverFollowing, setHoverFollowing] = useState(null)
   const [hoverProfile,setHoverProfile] = useState(false)
@@ -27,13 +24,13 @@ const Profile = () => {
     if(inView ) fetchNextPage();
   },[inView])
 
-  const {mutate:followUser,isPending:isFollowingUser} = useAddRelation()
-  const {mutate:deleteRelation,isPending:isDeletingRelation} = useDeleteRelation()
+  const {mutate:followUser} = useAddRelation()
+  const {mutate:deleteRelation} = useDeleteRelation()
   
   const followedUser = currentUser?.followerUsers.find(
     (record:Models.Document)=>record.followed.$id === user?.$id)
 
-    const isUserFollowingYou = user?.followerUsers.find((item)=> item.followed.$id === currentUser?.$id)
+    const isUserFollowingYou = user?.followerUsers.find((item:any)=> item.followed.$id === currentUser?.$id)
 
 
 
@@ -48,15 +45,13 @@ const Profile = () => {
         deleteRelation(followedUser.$id)
     }else{
         setIsFollowed(true)
-        followUser({followerId:currentUser.$id, followedId:user.$id})
+        followUser({followerId:currentUser?.$id || "", followedId:user?.$id || ""} )
     }
    
 }
   const navigate = useNavigate()
 
-const handleTabClick = (tab) => {
-  setSelected(tab);
-};
+
 
 if(isLoading){
   return (
@@ -128,7 +123,7 @@ if(isLoading){
             <span className='cursor-pointer' onClick={()=>{ setSelectedFollow("Following"), setOpen(true)}}>{user?.followerUsers?.length} <span className='text-gray-600'>Following</span></span>
           </div>
           <div className='mt-2 flex'>
-              Joined {getMonthAndYear(user?.$createdAt)}
+              Joined {getMonthAndYear(user?.$createdAt || "")}
           </div>
         </div>
         {/* <div className='flex flex-col  px-4 w-full '>
@@ -162,7 +157,7 @@ if(isLoading){
       ):
       userPosts?.pages.map((page, pageIndex) => (
                     <div key={`page-${pageIndex}`} className='flex flex-col gap-4'>
-                      {page?.documents.map((post, postIndex) => (
+                      {page?.documents.map((post) => (
                        <ProfilePostsCard
                        post={post}
                        key={post.$id}
@@ -185,7 +180,7 @@ if(isLoading){
               <hr className="border w-full  border-dark-4/80 " />  
               <div className='w-full  h-full overflow-x-auto custom-scrollbar pt-2 flex flex-col gap-4'>
                     {selectedFollow === "Followers" ?  
-                    user?.followedUsers?.map((user)=>(
+                    user?.followedUsers?.map((user:any)=>(
                       <Link onClick={()=>setOpen(false)} to={`/profile/${user?.followers?.$id}`} key={user.$id}                   
                       className=' flex justify-between  w-full hover:bg-dark-3 items-start gap-3 p-2 '>
                          <div className='flex  max-w-[80%] gap-2'>
@@ -206,7 +201,7 @@ if(isLoading){
                        }                       
                       </Link>
                     )) : (
-                      user?.followerUsers?.map((item)=>(
+                      user?.followerUsers?.map((item:any)=>(
                         <Link onClick={()=>setOpen(false)} to={`/profile/${item.followed.$id}`} key={item.$id} 
                       className=' flex justify-between  w-full hover:bg-dark-3 items-start gap-3 p-2 '>
                          <div className='flex  max-w-[80%] gap-2'>
@@ -223,7 +218,7 @@ if(isLoading){
                          <div
                            className='border flex items-center justify-center p-2 rounded-[5px]  hover:border-red hover:text-red'
                             onMouseEnter={() => setHoverFollowing(item)}
-                            onMouseLeave={() => setHoverFollowing(false)} >
+                            onMouseLeave={() => setHoverFollowing(null)} >
                            <p>{hoverFollowing === item ? 'Unfollow' : 'Following'}</p>
                         </div>             }
                       </Link>

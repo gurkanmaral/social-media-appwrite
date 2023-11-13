@@ -6,7 +6,6 @@ import {Link,useNavigate} from "react-router-dom"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,11 +21,11 @@ import { useUserContext } from "@/context/AuthContext"
 
 const SignupForm = () => {
   const {toast} = useToast()
-  const {checkAuthUser,isLoading:isUserLoading} = useUserContext()
+  const {checkAuthUser} = useUserContext()
 const navigate = useNavigate()
   const {mutateAsync:createUserAccount,isPending:isCreatingUser} = useCreateUserAccount()
 
-  const {mutateAsync: signInAccount,isPending:isSigningIn} = useSignInAccount()
+  const {mutateAsync: signInAccount} = useSignInAccount()
 
 
   const form = useForm<z.infer<typeof SignupValidation>>({
@@ -51,7 +50,7 @@ const navigate = useNavigate()
     })
    }
     const session = await signInAccount({email:values.email,password:values.password,})
-   
+
     if(!session){
 
       return toast({title:"Sign in failed.Please try again"})

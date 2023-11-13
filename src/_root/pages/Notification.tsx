@@ -1,18 +1,32 @@
-import { useGetCurrentUser, useGetUsersSavedPost } from '@/lib/react-query/queriesAndMutations'
-import { formatDateString, multiFormatDateString } from '@/lib/utils'
+import { useGetCurrentUser } from '@/lib/react-query/queriesAndMutations'
+import { multiFormatDateString } from '@/lib/utils'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
+
+interface Notification {
+  type:string;
+  name:string;
+  createdAt: string; 
+  id:string;
+  imageUrl:string;
+  seen:boolean;
+  postCaption?:string;
+ 
+  
+}
+
+
 const Notification = () => {
 
-    const {data:currentUser,isLoading} = useGetCurrentUser()
+    const {data:currentUser} = useGetCurrentUser()
     console.log(currentUser)
     
    
 
 
    
-const combinedNotifications = [];
+const combinedNotifications: Notification[] = [];
 // Add followed user notifications
 if (currentUser?.followedUsers && Array.isArray(currentUser.followedUsers)) {
     currentUser.followedUsers.forEach((item) => {
@@ -31,7 +45,7 @@ if (currentUser?.followedUsers && Array.isArray(currentUser.followedUsers)) {
   if (currentUser?.posts && Array.isArray(currentUser.posts)) {
     currentUser.posts.forEach((post) => {
       if (Array.isArray(post?.likes)) {
-        post.likes.forEach((item) => {
+        post.likes.forEach((item:any) => {
           if(item.$id === currentUser.$id){
               return
           }
@@ -51,7 +65,7 @@ if (currentUser?.followedUsers && Array.isArray(currentUser.followedUsers)) {
   if(currentUser?.comments && Array.isArray(currentUser.comments)){
     currentUser.comments.forEach((comment)=>{
       if(Array.isArray(comment?.commentLikes)){
-        comment.commentLikes.forEach((item)=>{
+        comment.commentLikes.forEach((item:any)=>{
           if(item.username === currentUser.username){
             return
         }else{
@@ -68,7 +82,9 @@ if (currentUser?.followedUsers && Array.isArray(currentUser.followedUsers)) {
       }
     })
   }
-  combinedNotifications.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  combinedNotifications.sort((a: Notification, b: Notification) => {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
 
 
   console.log(combinedNotifications)
@@ -89,7 +105,7 @@ if (currentUser?.followedUsers && Array.isArray(currentUser.followedUsers)) {
                       className='w-12 h-12 rounded-full ' 
                       />
                     </Link>
-                    <Link  to={notification.tpye ==="followed" ? `/profile/${notification.id}` : `/posts/${notification.id}`} className=''>
+                    <Link  to={notification.type ==="followed" ? `/profile/${notification.id}` : `/posts/${notification.id}`} className=''>
                      {notification.type === 'followed'
                     ? `${notification.name} followed you.` : notification.type === 'liked' ? <span> {notification.name} liked your post <span className='font-bold'>{notification.postCaption  && notification.postCaption}</span></span> 
                     : <span>{notification.name} liked your comment </span> }

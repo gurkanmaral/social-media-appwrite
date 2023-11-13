@@ -1,21 +1,12 @@
-import { useUserContext } from '@/context/AuthContext'
 import { Models } from 'appwrite'
-import React from 'react'
-import { Link } from 'react-router-dom'
-import PostStats from './PostStats'
 import PostCard from './PostCard'
 
 type GridPostListProps = {
-  posts:Models.Document[];
-  showUser?:boolean;
-  showStats?:boolean;
+  posts?:Models.Document[];
+
 }
 
-const HomePostList = ({posts,showUser=true,showStats=true}:GridPostListProps) => {
-
-
-
-
+const HomePostList = ({posts}:GridPostListProps) => {
 
 
   return (

@@ -10,7 +10,7 @@ import { Models } from 'appwrite'
 const Rightbar = () => {
 
   const {data:rightbarUsers,isPending} = useRightBarUsers()
-  const {data:currentUser,isLoading} = useGetCurrentUser()
+  const {data:currentUser} = useGetCurrentUser()
 
   console.log(rightbarUsers)
 

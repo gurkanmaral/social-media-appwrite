@@ -23,7 +23,7 @@ const RightBarUserCard = ({user,currentUser}:UserCardProps) => {
     const savedPostRecord = currentUser?.followerUsers.find(
         (record:Models.Document)=>record.followed.$id === user.$id)
 
-        console.log(savedPostRecord)
+       
 
         useEffect(()=>{
             setIsFollowed(savedPostRecord ? true : false)

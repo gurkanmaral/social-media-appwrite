@@ -1,9 +1,7 @@
 import HomePostList from '@/components/shared/HomePostList';
 import Loader from '@/components/shared/Loader';
-import PostCard from '@/components/shared/PostCard';
 import Rightbar from '@/components/shared/Rightbar';
-import { useGetPosts, useGetRecentPosts } from '@/lib/react-query/queriesAndMutations';
-import { Models } from 'appwrite';
+import { useGetPosts } from '@/lib/react-query/queriesAndMutations';
 import {useEffect} from 'react'
 import { useInView } from 'react-intersection-observer';
 

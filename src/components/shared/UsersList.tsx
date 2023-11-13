@@ -1,11 +1,10 @@
 import { Models } from 'appwrite'
-import React from 'react'
 import UserCard from './UserCard'
 import { useUserContext } from '@/context/AuthContext'
 import {  useGetCurrentUser, useGetRecentRelations } from '@/lib/react-query/queriesAndMutations'
 
 type UsersListProps = {
-    users: Models.Document[]
+    users?: Models.Document[]
 }
 
 const UsersList = ({users}:UsersListProps) => {
@@ -16,7 +15,7 @@ const UsersList = ({users}:UsersListProps) => {
 
     const filteredUsers = filteredUser?.filter((user) => {
       // Check if the user's accountId is not in currentUserFollowedUsers
-      return !currentUser?.followedUsers.some((followedUser) => followedUser.accountId === user.accountId);
+      return !currentUser?.followedUsers.some((followedUser:any) => followedUser.accountId === user.accountId);
     });
     
     console.log(filteredUsers);
@@ -24,7 +23,7 @@ const UsersList = ({users}:UsersListProps) => {
    console.log(currentUser)
     
 
-    const {data,isLoading} = useGetRecentRelations()
+    const {data} = useGetRecentRelations()
 console.log(users)
     console.log(data)
 

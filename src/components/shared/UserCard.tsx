@@ -37,7 +37,7 @@ const UserCard = ({user}:UserCardProps) => {
             deleteRelation(savedPostRecord.$id)
         }else{
             setIsFollowed(true)
-            followUser({followerId:currentUser.$id, followedId:user.$id})
+            followUser({followerId:currentUser?.$id|| "", followedId:user?.$id || ""})
         }
        
     }
@@ -52,7 +52,7 @@ const UserCard = ({user}:UserCardProps) => {
                 <div className='flex flex-col'>
                     <h1 className='font-bold'>{user.name}</h1>
                     <p className='text-gray-400 text-[14px]'>@{user.username}</p>
-                    <p>asdasdasdasdadas</p>
+                    <p>{user?.bio}</p>
                 </div>
                </Link>
             </div>

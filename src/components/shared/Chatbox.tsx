@@ -2,7 +2,6 @@ import { useAddChat, useGetUserChats } from '@/lib/react-query/queriesAndMutatio
 import React, { useState } from 'react'
 import Message from './Message'
 import Loader from './Loader'
-import { Models } from 'appwrite'
 
 type SelectedUserState = {
   id: string;
@@ -11,7 +10,7 @@ type SelectedUserState = {
 };
 
 type ChatBoxProps = {
-  currentUser: Models.Document;
+  currentUser: string;
   setSelectedUser: React.Dispatch<React.SetStateAction<SelectedUserState>>;
   setSelectedPage: React.Dispatch<React.SetStateAction<string>>;
   selectedUser: SelectedUserState;
@@ -23,15 +22,15 @@ const Chatbox = ({currentUser,selectedUser,setSelectedUser,setSelectedPage}:Chat
   const {mutate:sendMessage,isPending:messageLoading} = useAddChat()
   const [message,setMessage] = useState("")
 
-  const{data:messageData,isPending} = useGetUserChats(currentUser?.$id,selectedUser.id)
+  const{data:messageData,isPending} = useGetUserChats(currentUser,selectedUser.id)
 
 
-  console.log(messageData)
+
   
 
   const handleMessage = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      const senderId = currentUser?.$id;
+      const senderId = currentUser;
       const receiverId = selectedUser.id;
       const messageValue = message;
     

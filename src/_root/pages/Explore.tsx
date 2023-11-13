@@ -1,4 +1,4 @@
-import GridPostList from '@/components/shared/GridPostList';
+
 import Loader from '@/components/shared/Loader';
 import ProfilePostsCard from '@/components/shared/ProfilePostsCard';
 import SearchResults from '@/components/shared/SearchResults';
@@ -65,7 +65,7 @@ const Explore = () => {
           {shouldShowSearchResults ? (
             <SearchResults
             isSearchFetching = {isSearchFetching}
-            searchedPost={searchedPost}
+            searchedPost={searchedPost?.documents}
             />
           ) : shouldShowPosts ? (
             <p className='text-light-4 mt-10 text-center w-full'>
@@ -73,7 +73,7 @@ const Explore = () => {
           ): (
             posts.pages.map((page,pageIndex)=>(
               <div key={`page-${pageIndex}`} className='flex flex-col gap-4'>
-              {page?.documents.map((post, postIndex) => (
+              {page?.documents.map((post:any) => (
                <ProfilePostsCard
                post={post}
                key={post.$id}      

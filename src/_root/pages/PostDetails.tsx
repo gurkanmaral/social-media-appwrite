@@ -14,7 +14,7 @@ const PostDetails = () => {
 
   const { data: post, isLoading } = useGetPostById(id || '');
 
- const {data:currentUser,isLoading:currentUserLoading} = useGetCurrentUser()
+ const {data:currentUser} = useGetCurrentUser()
   
  const {mutate:deletePost,isPending:deletingLoading} = useDeletePost()
 
@@ -25,7 +25,7 @@ const PostDetails = () => {
 
   const handleDeletePost = () =>{
    
-    deletePost(post?.$id)
+    deletePost(post?.$id || "")
 
     !deletingLoading && alert('Post has been deleted')
   
